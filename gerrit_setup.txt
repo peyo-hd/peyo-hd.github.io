@@ -1,0 +1,28 @@
+AOSP Life of a Patch : https://source.android.com/setup/contribute/life-of-a-patch
+Quick Start Guide : https://gerrit-review.googlesource.com/Documentation/install-quick.html
+Gerrit Install Guide : https://gerrit-review.googlesource.com/Documentation/install.html
+Apache auth with System Account : https://serverfault.com/questions/45278/authenticate-in-apache-via-system-account
+
+1. Install gerrit
+  Download gerrit-2.15.3.war from https://gerrit-releases.storage.googleapis.com/index.html
+  Or  from https://gerrit-releases.storage.googleapis.com/gerrit-2.15.xx.war 
+  Put it to /home/gerrit/bin/gerrit.war
+  Make gerrit user : /home/gerrit
+  java -jar /home/gerrit/bin/gerrit.war init -d /home/gerrit
+  /home/gerrit/etc/gerrit.config
+  
+2.Run gerrit
+  Run /home/gerrit/bin/gerrit.sh start
+  Check logs in /home/gerrit/logs
+  Check IP port 8081 & 29418 with netstat -ant
+ 
+3.Configure Apache2 Proxy & Login
+  Enable Apache2 on Ubuntu
+  Install Apache modules for Login with /etc/passwd
+    apt-get install libapache2-mod-authnz-external pwauth
+    a2enmod authnz_external proxy_http
+  Add /etc/apache2/sites-available/ : 100-gerrit.conf
+    Do symbolic link to /etc/apache2/sites-enabled/
+    Check 'Location /login/' section & ProxyPass line
+  sudo /etc/init.d/apache2 start
+    Check 8080 & 8081 port for Proxy working
